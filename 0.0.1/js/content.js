@@ -8,7 +8,8 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.message === "clicked_browser_action") {
       var all_urls = "";
-      var urls = {"ㅁㄴㅇㄹ.com": "가짜"};
+      var urls = {};
+      // var urls = {"ㅁㄴㅇㄹ.com": "가짜"};  // Test
 
       // current tab's URL
       all_urls += "Tab URL: " + request.url;
@@ -17,7 +18,7 @@ chrome.runtime.onMessage.addListener(
 
       // all links on the page
       var links = document.querySelectorAll("a");
-  	  for (var i = 1; i < links.length; ++i) {  // Set i=1 because i=0 is null
+  	  for (var i = 1; i < 4; ++i) {  // Set i=1 because i=0 is null
     	urls[links[i].textContent] = links[i].href;
       }
       for (var p in urls) {
@@ -29,8 +30,9 @@ chrome.runtime.onMessage.addListener(
 
   	  // Parse the URL for any non-ascii characters
   	  for (var u in urls) {
-  	  	if (isAsciiOnly(urls[u]) == false) {
-  	  	alert(urls[u] + " with the URL " + u + " contains non-ascii characters.");
+  	  	if (isAsciiOnly(u) == false) {
+  	  	  alert('The link "' + u + '" leads to the URL "' + urls[u] +
+                '", which contains non-ASCII characters.');
   	  	}
   	  }
     }
