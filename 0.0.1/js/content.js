@@ -3,41 +3,52 @@
 - Desc
 */
 
+// alert(isAsciiOnly(punycode.decode('maana-pta'))); 
+// alert(isAsciiOnly(punycode.toUnicode('https://www.xn--80ak6aa92e.com/')));
+// alert(punycode.toUnicode('xxn--80ak6aa92e')); 
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
+    var warning = "";
     if (request.message === "clicked_browser_action") {
+      // Local variables
       var all_urls = "";
       var urls = {};
-      // var urls = {"ㅁㄴㅇㄹ.com": "가짜"};  // Test
+      // var urls = {"네이버.com": "테스트"};  // Test
 
-      // current tab's URL
+      // Getting current tab's URL
       all_urls += "Tab URL: " + request.url;
-      urls[request.url] = "this current tab's URL";
-      // alert(url);
+      urls["this current tab"] = request.url;
 
-      // all links on the page
+      // Getting all links on the opened page
       var links = document.querySelectorAll("a");
-  	  for (var i = 1; i < 4; ++i) {  // Set i=1 because i=0 is null
+  	  for (var i = 1; i < links.length; ++i) {  // Set i=1 because i=0 is null
     	urls[links[i].textContent] = links[i].href;
-      }
-      for (var p in urls) {
-    	if (urls.hasOwnProperty(p)) {
-     	 all_urls += p + ": " + urls[p] + "\n";
-    	} 
-  	  } 
-  	  // alert(all_urls);
+      } 
 
   	  // Parse the URL for any non-ascii characters
   	  for (var u in urls) {
-  	  	if (isAsciiOnly(u) == false) {
-  	  	  alert('The link "' + u + '" leads to the URL "' + urls[u] +
-                '", which contains non-ASCII characters.');
+        // alert(urls[u]);
+  	  	if (isAsciiOnly(punycode.toUnicode(urls[u])) == false) {
+        // if (isAsciiOnly(urls[u]) == false) {
+  	  	  // alert('The link "' + u + '" leads to the URL "' + urls[u] +
+                // '", which contains non-ASCII characters.');
+          warning += 'WARNING: The link for "' + u + '" leads to the URL "' + punycode.toUnicode(urls[u]) +
+                     '", which contains non-ASCII characters.';
+          // warning += "\n\n test string";
   	  	}
   	  }
+      // Push out warning with all logged issues
+      if (warning) {
+        alert(warning);
+      }
     }
   }
 );
+
+function isItUnicode(str) {
+
+}
 
 function isAsciiOnly(str) {
     for (var i = 0; i < str.length; i++)
@@ -46,3 +57,7 @@ function isAsciiOnly(str) {
         }
     return true;
 }
+
+
+
+

@@ -6,11 +6,11 @@
     "default_icon": "images/icon-128.png"
   },
   "background": {
-    "scripts": ["js/background.js"]
+    "scripts": ["js/punycode.js", "js/background.js"]
   },
   "content_scripts": [{
       "matches": ["<all_urls>"],
-      "js": ["js/content.js"]
+      "js": ["js/punycode.js", "js/content.js"]
   }],
   "permissions": [
     "tabs", "<all_urls>"
