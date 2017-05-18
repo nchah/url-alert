@@ -3,21 +3,14 @@
 - Desc
 */
 
-// alert(isAsciiOnly(punycode.decode('maana-pta'))); 
-// alert(isAsciiOnly(punycode.toUnicode('https://www.xn--80ak6aa92e.com/')));
-// alert(punycode.toUnicode('xxn--80ak6aa92e')); 
-
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     var warning = "";
     if (request.message === "exec") {
-      // Local variables
-      var all_urls = "";
       var urls = {};
-      // var urls = {"네이버.com": "테스트"};  // Test
+      var warning = "";
 
       // Getting current tab's URL
-      all_urls += "Tab URL: " + request.url;
       urls["this current tab"] = request.url;
 
       // Getting all links on the opened page
@@ -28,26 +21,22 @@ chrome.runtime.onMessage.addListener(
 
   	  // Parse the URL for any non-ascii characters
   	  for (var u in urls) {
-        // alert(Object.keys(urls).length);
-  	  	if (isAsciiOnly(punycode.toUnicode(urls[u])) == false) {
-        // if (isAsciiOnly(urls[u]) == false) {
-  	  	  // alert('The link "' + u + '" leads to the URL "' + urls[u] +
-                // '", which contains non-ASCII characters.');
-          warning += 'WARNING: The link for "' + u + '" leads to the URL "' + punycode.toUnicode(urls[u]) +
-                     '", which contains non-ASCII characters.\n';
-  	  	}
+        if (urls.hasOwnProperty(u)) {
+  	  	  if (isAsciiOnly(punycode.toUnicode(urls[u])) == false) {
+            warning += 'WARNING: The link for "' + u + '" leads to the URL "' + 
+                       punycode.toUnicode(urls[u]) +
+                       '", which contains non-ASCII characters.\n\n';
+  	  	  }
+        }
   	  }
-      // Push out warning with all logged issues
-      }
+      // warning with all logged issues
       if (warning.length > 0) {
         alert(warning);
+      }
     }
   }
 );
 
-function isItUnicode(str) {
-
-}
 
 function isAsciiOnly(str) {
     for (var i = 0; i < str.length; i++)
