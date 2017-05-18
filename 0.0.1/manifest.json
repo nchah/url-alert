@@ -13,7 +13,7 @@
       "js": ["js/punycode.js", "js/content.js"]
   }],
   "permissions": [
-    "tabs", "<all_urls>"
+    "tabs", "<all_urls>", "webNavigation"
   ],
   "manifest_version": 2,
   "icons": {
