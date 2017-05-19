@@ -18,19 +18,19 @@ chrome.runtime.onMessage.addListener(
         urls[links[i].textContent] = links[i].href;
       }
 
-  	  var warning = "WARNING: internationalized domain name detected.\n\n <br><br>"; // base warning
+  	  var warning = "WARNING: internationalized domain name(s) detected. <br><br>"; // base warning
       // Parse the URL for any non-ascii characters
   	  for (var u in urls) {
         if (urls.hasOwnProperty(u)) {
   	  	  if (isAsciiOnly(punycode.toUnicode(urls[u])) == false) {
             warning += 'The link for "' + u + '" leads to a URL that looks like "' + 
                        punycode.toUnicode(urls[u]) +
-                       '", but it contains non-ASCII characters.\n\n <br><br>';
+                       '", but it contains non-ASCII characters. <br><br>';
   	  	  }
         }
   	  }
       // warning with all logged issues
-      if (warning.length > 50) {
+      if (warning.length > 60) {
         // alert(warning);
         document.body.innerHTML += '<dialog>' + warning + '<button>OK</button></dialog>';
         var dialog = document.querySelector("dialog");
