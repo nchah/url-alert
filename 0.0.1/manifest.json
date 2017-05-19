@@ -10,7 +10,8 @@
   },
   "content_scripts": [{
       "matches": ["<all_urls>"],
-      "js": ["js/punycode.js", "js/content.js"]
+      "js": ["modal/jquery-ui.js", "modal/external/jquery/jquery.js",
+             "js/punycode.js", "js/content.js"]
   }],
   "permissions": [
     "tabs", "<all_urls>", "webNavigation"

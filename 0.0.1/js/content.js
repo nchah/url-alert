@@ -5,7 +5,6 @@
 
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-    var warning = "";
     if (request.message === "exec") {
       var urls = {};
       var warning = "";
@@ -19,19 +18,28 @@ chrome.runtime.onMessage.addListener(
         urls[links[i].textContent] = links[i].href;
       }
 
-  	  // Parse the URL for any non-ascii characters
+  	  var warning = "WARNING: internationalized domain name detected.\n\n <br><br>"; // base warning
+      // Parse the URL for any non-ascii characters
   	  for (var u in urls) {
         if (urls.hasOwnProperty(u)) {
   	  	  if (isAsciiOnly(punycode.toUnicode(urls[u])) == false) {
-            warning += 'WARNING: The link for "' + u + '" leads to the URL "' + 
+            warning += 'The link for "' + u + '" leads to a URL that looks like "' + 
                        punycode.toUnicode(urls[u]) +
-                       '", which contains non-ASCII characters.\n\n';
+                       '", but it contains non-ASCII characters.\n\n <br><br>';
   	  	  }
         }
   	  }
       // warning with all logged issues
-      if (warning.length > 0) {
-        alert(warning);
+      if (warning.length > 50) {
+        // alert(warning);
+        document.body.innerHTML += '<dialog>' + warning + '<button>OK</button></dialog>';
+        var dialog = document.querySelector("dialog");
+        dialog.style.width = "35%";
+        dialog.style.color = "red";
+        dialog.querySelector("button").addEventListener("click", function() {
+            dialog.close();
+        })
+        dialog.showModal();
       }
     }
   }
