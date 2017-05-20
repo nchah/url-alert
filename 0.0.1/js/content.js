@@ -18,7 +18,8 @@ chrome.runtime.onMessage.addListener(
         urls[links[i].textContent] = links[i].href;
       }
 
-  	  var warning = "WARNING: internationalized domain name(s) detected. <br><br>"; // base warning
+  	  var warning = "WARNING: internationalized domain name(s) detected. " +
+                    "This may be a IDN homograph attack.* <br><br>"; // base warning
       // Parse the URL for any non-ascii characters
   	  for (var u in urls) {
         if (urls.hasOwnProperty(u)) {
@@ -30,16 +31,24 @@ chrome.runtime.onMessage.addListener(
         }
   	  }
       // warning with all logged issues
-      if (warning.length > 60) {
+      if (warning.length > 250) {  // length of warning before IDNs added
         // alert(warning);
-        document.body.innerHTML += '<dialog>' + warning + '<button>OK</button></dialog>';
+        document.body.innerHTML += "<dialog>" + warning + "<button>OK</button>" +
+        "<br><br>*Please check this <a href='https://en.wikipedia.org/wiki/IDN_homograph_attack' target='_blank'> \
+        Wikipedia article</a> for details.</dialog>";
         var dialog = document.querySelector("dialog");
         dialog.style.width = "35%";
-        dialog.style.color = "red";
+        dialog.style.border = "1";
+        // dialog.style.color = "red";
+        var button = document.querySelector("button")
+        button.style.padding = "7px 20px";
+        // dialog.style.color = "red";
         dialog.querySelector("button").addEventListener("click", function() {
             dialog.close();
         })
         dialog.showModal();
+        // Testing:
+        // alert(isAsciiOnly(punycode.toUnicode('https://www.xn--80ak6aa92e.com/')))
       }
     }
   }
