@@ -1,9 +1,9 @@
 {
-  "name": "Tru URL Extension",
+  "name": "URL Alert",
   "version": "0.0.1",
-  "description": "Programmatically parse URLs",
+  "description": "Parse URLs for internationalized domain name homograph attacks.",
   "browser_action": {
-    "default_icon": "images/tru-url-logo.png"
+    "default_icon": "images/logo-128.png"
   },
   "background": {
     "scripts": ["js/punycode.js", "js/background.js"]
@@ -18,8 +18,8 @@
   ],
   "manifest_version": 2,
   "icons": {
-  	"16": "images/icon-16.png",
-    "48": "images/icon-48.png",
-  	"128": "images/icon-128.png"
+  	"16": "images/logo-16.png",
+    "48": "images/logo-48.png",
+  	"128": "images/logo-128.png"
   }
 }
