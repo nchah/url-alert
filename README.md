@@ -1,9 +1,17 @@
 # URL Alert
 
-A Chrome extension to parse URLs for internationalized domain names.
-This may be a sign that the URL is an internationalized domain name (IDN) homograph attack ([Wikipedia](https://en.wikipedia.org/wiki/IDN_homograph_attack)).
+URL Alert is a Chrome extension to parse URLs for internationalized domain names.
 
 Available on the [Chrome Web Store](https://chrome.google.com/webstore/detail/url-alert/pflncfgmhaeckfmdgogffkbjkkogjgkh).
+
+
+## Usage
+
+A internationalized domain name (IDN) may be a sign that the URL is part of an internationalized domain name (IDN) homograph attack ([Wikipedia](https://en.wikipedia.org/wiki/IDN_homograph_attack)).
+
+For example, you may find a URL that looks like "https://www.еріс.com", but it's actually the unicode domain: https://www.xn--e1awd7f.com/ (written in [Punycode](https://en.wikipedia.org/wiki/Punycode)). 
+By using similar looking Cyrillic letters, the word "www.еріс.com" looks like "www.epic.com".
+Check this site ([Unicode Lookup](https://unicodelookup.com/#www.еріс.com/1)) for details on the Unicode characters that are used.
 
 
 ## Screenshot
@@ -22,9 +30,9 @@ Or try this site: https://www.аррӏе.com/ and the associated blog post where
 
 ## Dependencies
 
-The modal that displays the warning uses jQuery [jQuery UI](https://jqueryui.com).
+The modal that displays the warning uses jQuery ([jQuery UI](https://jqueryui.com)).
 
-The URL unicode check is done with punycode.js [GitHub: bestiejs/punycode.js](https://github.com/bestiejs/punycode.js/).
+The URL unicode check is done with punycode.js ([GitHub: bestiejs/punycode.js](https://github.com/bestiejs/punycode.js/)).
 
 
 
