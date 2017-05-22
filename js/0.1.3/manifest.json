@@ -1,0 +1,25 @@
+{
+  "name": "URL Alert",
+  "version": "0.1.2",
+  "description": "Parse URLs for internationalized domain names.",
+  "browser_action": {
+    "default_icon": "images/logo-128.png"
+  },
+  "background": {
+    "scripts": ["js/punycode.js", "js/background.js"]
+  },
+  "content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["modal/jquery-ui.js", "modal/external/jquery/jquery.js",
+             "js/punycode.js", "js/content.js"]
+  }],
+  "permissions": [
+    "tabs", "<all_urls>", "webNavigation"
+  ],
+  "manifest_version": 2,
+  "icons": {
+  	"16": "images/logo-16.png",
+    "48": "images/logo-48.png",
+  	"128": "images/logo-128.png"
+  }
+}
